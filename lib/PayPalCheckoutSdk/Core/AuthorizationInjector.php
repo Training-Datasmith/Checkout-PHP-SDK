@@ -9,18 +9,14 @@ use PayPalHttp\HttpClient;
 class AuthorizationInjector implements Injector
 {
     private $client;
-    private $environment;
-    private $refreshToken;
     public $accessToken;
 
-    public function __construct(HttpClient $client, PayPalEnvironment $environment, $refreshToken)
+    public function __construct(HttpClient $client, private readonly PayPalEnvironment $environment, private $refreshToken)
     {
         $this->client = $client;
-        $this->environment = $environment;
-        $this->refreshToken = $refreshToken;
     }
 
-    public function inject($request)
+    public function inject($request): void
     {
         if (!$this->hasAuthHeader($request) && !$this->isAuthRequest($request))
         {
@@ -32,19 +28,19 @@ class AuthorizationInjector implements Injector
         }
     }
 
-    private function fetchAccessToken()
+    private function fetchAccessToken(): \PayPalCheckoutSdk\Core\AccessToken
     {
         $accessTokenResponse = $this->client->execute(new AccessTokenRequest($this->environment, $this->refreshToken));
         $accessToken = $accessTokenResponse->result;
         return new AccessToken($accessToken->access_token, $accessToken->token_type, $accessToken->expires_in);
     }
 
-    private function isAuthRequest($request)
+    private function isAuthRequest($request): bool
     {
         return $request instanceof AccessTokenRequest || $request instanceof RefreshTokenRequest;
     }
 
-    private function hasAuthHeader(HttpRequest $request)
+    private function hasAuthHeader(HttpRequest $request): bool
     {
         return array_key_exists("Authorization", $request->headers);
     }

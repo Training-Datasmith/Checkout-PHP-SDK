@@ -6,7 +6,7 @@ use PayPalHttp\Injector;
 
 class FPTIInstrumentationInjector implements Injector
 {
-    public function inject($request)
+    public function inject($request): void
     {
         $request->headers["sdk_name"] = "Checkout SDK";
         $request->headers["sdk_version"] = "1.0.2";

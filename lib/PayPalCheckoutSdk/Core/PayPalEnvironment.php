@@ -6,13 +6,8 @@ use PayPalHttp\Environment;
 
 abstract class PayPalEnvironment implements Environment
 {
-    private $clientId;
-    private $clientSecret;
-
-    public function __construct($clientId, $clientSecret)
+    public function __construct(private $clientId, private $clientSecret)
     {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
     }
 
     public function authorizationString()

@@ -17,16 +17,16 @@ class AuthorizationsCaptureRequest extends HttpRequest
     {
         parent::__construct("/v2/payments/authorizations/{authorization_id}/capture?", "POST");
 
-        $this->path = str_replace("{authorization_id}", urlencode($authorizationId), $this->path);
+        $this->path = str_replace("{authorization_id}", urlencode((string) $authorizationId), $this->path);
         $this->headers["Content-Type"] = "application/json";
     }
 
 
-    public function payPalRequestId($payPalRequestId)
+    public function payPalRequestId($payPalRequestId): void
     {
         $this->headers["PayPal-Request-Id"] = $payPalRequestId;
     }
-    public function prefer($prefer)
+    public function prefer($prefer): void
     {
         $this->headers["Prefer"] = $prefer;
     }

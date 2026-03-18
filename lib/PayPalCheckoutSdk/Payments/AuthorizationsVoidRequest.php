@@ -17,7 +17,7 @@ class AuthorizationsVoidRequest extends HttpRequest
     {
         parent::__construct("/v2/payments/authorizations/{authorization_id}/void?", "POST");
 
-        $this->path = str_replace("{authorization_id}", urlencode($authorizationId), $this->path);
+        $this->path = str_replace("{authorization_id}", urlencode((string) $authorizationId), $this->path);
         $this->headers["Content-Type"] = "application/json";
     }
 

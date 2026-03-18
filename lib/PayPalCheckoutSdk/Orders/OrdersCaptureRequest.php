@@ -17,20 +17,20 @@ class OrdersCaptureRequest extends HttpRequest
     {
         parent::__construct("/v2/checkout/orders/{order_id}/capture?", "POST");
 
-        $this->path = str_replace("{order_id}", urlencode($orderId), $this->path);
+        $this->path = str_replace("{order_id}", urlencode((string) $orderId), $this->path);
         $this->headers["Content-Type"] = "application/json";
     }
 
 
-    public function payPalClientMetadataId($payPalClientMetadataId)
+    public function payPalClientMetadataId($payPalClientMetadataId): void
     {
         $this->headers["PayPal-Client-Metadata-Id"] = $payPalClientMetadataId;
     }
-    public function payPalRequestId($payPalRequestId)
+    public function payPalRequestId($payPalRequestId): void
     {
         $this->headers["PayPal-Request-Id"] = $payPalRequestId;
     }
-    public function prefer($prefer)
+    public function prefer($prefer): void
     {
         $this->headers["Prefer"] = $prefer;
     }
