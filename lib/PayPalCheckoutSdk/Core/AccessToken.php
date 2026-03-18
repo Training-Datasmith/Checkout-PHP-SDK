@@ -1,7 +1,8 @@
 <?php
 
-namespace PayPalCheckoutSdk\Core;
+declare(strict_types=1);
 
+namespace PayPalCheckoutSdk\Core;
 
 class AccessToken
 {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PayPalCheckoutSdk\Core;
 
 use PayPalHttp\HttpClient;
@@ -11,7 +13,7 @@ class PayPalHttpClient extends HttpClient
      */
     public $authInjector;
 
-    public function __construct(PayPalEnvironment $environment, private $refreshToken = NULL)
+    public function __construct(PayPalEnvironment $environment, private $refreshToken = null)
     {
         parent::__construct($environment);
         $this->authInjector = new AuthorizationInjector($this, $environment, $this->refreshToken);
@@ -25,4 +27,3 @@ class PayPalHttpClient extends HttpClient
         return UserAgent::getValue();
     }
 }
-

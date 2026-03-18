@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PayPalCheckoutSdk\Core;
 
+use PayPalHttp\HttpClient;
 use PayPalHttp\HttpRequest;
 use PayPalHttp\Injector;
-use PayPalHttp\HttpClient;
 
 class AuthorizationInjector implements Injector
 {
@@ -18,10 +20,8 @@ class AuthorizationInjector implements Injector
 
     public function inject($request): void
     {
-        if (!$this->hasAuthHeader($request) && !$this->isAuthRequest($request))
-        {
-            if (is_null($this->accessToken) || $this->accessToken->isExpired())
-            {
+        if (!$this->hasAuthHeader($request) && !$this->isAuthRequest($request)) {
+            if (is_null($this->accessToken) || $this->accessToken->isExpired()) {
                 $this->accessToken = $this->fetchAccessToken();
             }
             $request->headers['Authorization'] = 'Bearer ' . $this->accessToken->token;
@@ -42,6 +42,6 @@ class AuthorizationInjector implements Injector
 
     private function hasAuthHeader(HttpRequest $request): bool
     {
-        return array_key_exists("Authorization", $request->headers);
+        return array_key_exists('Authorization', $request->headers);
     }
 }

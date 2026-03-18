@@ -1,15 +1,14 @@
 <?php
 
-
+declare(strict_types=1);
 
 namespace Test\Orders;
 
-use PHPUnit\Framework\TestCase;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 use PayPalCheckoutSdk\Orders\OrdersPatchRequest;
-use PayPalCheckoutSdk\Orders\OrdersGetRequest;
+use PHPUnit\Framework\TestCase;
 use Test\TestHarness;
-
 
 class OrdersPatchTest extends TestCase
 {
@@ -17,18 +16,18 @@ class OrdersPatchTest extends TestCase
     {
         return [
             [
-                "op" => "add",
-                "path" => "/purchase_units/@reference_id=='test_ref_id1'/description",
-                "value" => "added_description"
+                'op' => 'add',
+                'path' => "/purchase_units/@reference_id=='test_ref_id1'/description",
+                'value' => 'added_description',
             ],
             [
-                "op" => "replace",
-                "path" => "/purchase_units/@reference_id=='test_ref_id1'/amount",
-                "value" => [
-                    "currency_code" => "USD",
-                    "value" => "200.00"
-                ]
-            ]
+                'op' => 'replace',
+                'path' => "/purchase_units/@reference_id=='test_ref_id1'/amount",
+                'value' => [
+                    'currency_code' => 'USD',
+                    'value' => '200.00',
+                ],
+            ],
         ];
     }
 
@@ -52,22 +51,22 @@ class OrdersPatchTest extends TestCase
         $this->assertNotNull($createdOrder->purchase_units);
         $this->assertEquals(1, count($createdOrder->purchase_units));
         $firstPurchaseUnit = $createdOrder->purchase_units[0];
-        $this->assertEquals("test_ref_id1", $firstPurchaseUnit->reference_id);
-        $this->assertEquals("USD", $firstPurchaseUnit->amount->currency_code);
-        $this->assertEquals("200.00", $firstPurchaseUnit->amount->value);
-        $this->assertEquals("added_description", $firstPurchaseUnit->description);
+        $this->assertEquals('test_ref_id1', $firstPurchaseUnit->reference_id);
+        $this->assertEquals('USD', $firstPurchaseUnit->amount->currency_code);
+        $this->assertEquals('200.00', $firstPurchaseUnit->amount->value);
+        $this->assertEquals('added_description', $firstPurchaseUnit->description);
 
         $this->assertNotNull($createdOrder->create_time);
         $this->assertNotNull($createdOrder->links);
         $foundApproveUrl = false;
         foreach ($createdOrder->links as $link) {
-            if ("approve" === $link->rel) {
+            if ('approve' === $link->rel) {
                 $foundApproveUrl = true;
                 $this->assertNotNull($link->href);
-                $this->assertEquals("GET", $link->method);
+                $this->assertEquals('GET', $link->method);
             }
         }
         $this->assertTrue($foundApproveUrl);
-        $this->assertEquals("CREATED", $createdOrder->status);
+        $this->assertEquals('CREATED', $createdOrder->status);
     }
 }

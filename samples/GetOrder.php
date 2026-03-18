@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sample;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Sample\PayPalClient;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use Sample\CaptureIntentExamples\CreateOrder;
 
 class GetOrder
 {
-
     /**
      * This function can be used to retrieve an order by passing order Id as argument.
      */
     public static function getOrder($orderId)
     {
-        
+
         $client = PayPalClient::client();
         $response = $client->execute(new OrdersGetRequest($orderId));
         /**
@@ -28,8 +28,7 @@ class GetOrder
         print "Order ID: {$response->result->id}\n";
         print "Intent: {$response->result->intent}\n";
         print "Links:\n";
-        foreach($response->result->links as $link)
-        {
+        foreach ($response->result->links as $link) {
             print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
         }
 
@@ -43,12 +42,11 @@ class GetOrder
 /**
  * This is the driver function which invokes the getOrder function to retrieve
  * an sample order.
- * 
+ *
  * To get the correct Order id, we are using the createOrder to create new order
  * and then we are using the newly created order id.
  */
-if (!count(debug_backtrace()))
-{
+if (!count(debug_backtrace())) {
     $createdOrder = CreateOrder::createOrder()->result;
     GetOrder::getOrder($createdOrder ->id);
 }

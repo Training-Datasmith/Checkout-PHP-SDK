@@ -1,29 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use Sample\PayPalClient;
 use PayPalHttp\HttpException;
+use Sample\PayPalClient;
 
 class ErrorSample
 {
-    public static function prettyPrint($jsonData, $pre="")
+    public static function prettyPrint($jsonData, $pre = '')
     {
-        $pretty = "";
-        foreach ($jsonData as $key => $val)
-        {
-            $pretty .= $pre . ucfirst($key) .": ";
-            if (strcmp(gettype($val), "array") == 0){
+        $pretty = '';
+        foreach ($jsonData as $key => $val) {
+            $pretty .= $pre . ucfirst($key) .': ';
+            if (strcmp(gettype($val), 'array') == 0) {
                 $pretty .= "\n";
                 $sno = 1;
-                foreach ($val as $value)
-                {
+                foreach ($val as $value) {
                     $pretty .= $pre . "\t" . $sno++ . ":\n";
                     $pretty .= self::prettyPrint($value, $pre . "\t\t");
                 }
-            }
-            else {
+            } else {
                 $pretty .= $val . "\n";
             }
         }
@@ -36,15 +35,14 @@ class ErrorSample
     public static function createError1()
     {
         $request = new OrdersCreateRequest();
-        $request->body = "{}";
+        $request->body = '{}';
         print "Request Body: {}\n\n";
 
         print "Response:\n";
-        try{
+        try {
             $client = PayPalClient::client();
             $response = $client->execute($request);
-        }
-        catch(HttpException $exception){
+        } catch (HttpException $exception) {
             $message = json_decode($exception->getMessage(), true);
             print "Status Code: {$exception->statusCode}\n";
             print(self::prettyPrint($message));
@@ -57,27 +55,26 @@ class ErrorSample
     public static function createError2()
     {
         $request = new OrdersCreateRequest();
-        $request->body = array (
+        $request->body =  [
             'intent' => 'INVALID',
             'purchase_units' =>
-                array (
+                 [
                     0 =>
-                        array (
+                         [
                             'amount' =>
-                                array (
+                                 [
                                     'currency_code' => 'USD',
                                     'value' => '100.00',
-                                ),
-                        ),
-                ),
-        );
+                                ],
+                        ],
+                ],
+        ];
         print "Request Body:\n" . json_encode($request->body, JSON_PRETTY_PRINT) . "\n\n";
 
-        try{
+        try {
             $client = PayPalClient::client();
             $response = $client->execute($request);
-        }
-        catch(HttpException $exception){
+        } catch (HttpException $exception) {
             print "Response:\n";
             $message = json_decode($exception->getMessage(), true);
             print "Status Code: {$exception->statusCode}\n";

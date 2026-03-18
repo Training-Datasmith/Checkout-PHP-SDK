@@ -1,48 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sample;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersPatchRequest;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
+use PayPalCheckoutSdk\Orders\OrdersPatchRequest;
 use Sample\AuthorizeIntentExamples\CreateOrder;
 
 class PatchOrder
 {
     private static function buildRequestBody()
     {
-        return array (
+        return  [
             0 =>
-                array (
+                 [
                     'op' => 'replace',
                     'path' => '/intent',
                     'value' => 'CAPTURE',
-                ),
+                ],
             1 =>
-                array (
+                 [
                     'op' => 'replace',
                     'path' => '/purchase_units/@reference_id==\'PUHF\'/amount',
                     'value' =>
-                        array (
+                         [
                             'currency_code' => 'USD',
                             'value' => '200.00',
                             'breakdown' =>
-                                array (
+                                 [
                                     'item_total' =>
-                                        array (
+                                         [
                                             'currency_code' => 'USD',
                                             'value' => '180.00',
-                                        ),
+                                        ],
                                     'tax_total' =>
-                                        array (
+                                         [
                                             'currency_code' => 'USD',
                                             'value' => '20.00',
-                                        ),
-                                ),
-                        ),
-                ),
-        );
+                                        ],
+                                ],
+                        ],
+                ],
+        ];
     }
 
     public static function patchOrder($orderId)
@@ -61,8 +63,7 @@ class PatchOrder
         print "Order ID: {$response->result->id}\n";
         print "Intent: {$response->result->intent}\n";
         print "Links:\n";
-        foreach($response->result->links as $link)
-        {
+        foreach ($response->result->links as $link) {
             print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}\n";
         }
 
@@ -73,8 +74,7 @@ class PatchOrder
     }
 }
 
-if (!count(debug_backtrace()))
-{
+if (!count(debug_backtrace())) {
     print "Before PATCH:\n";
     $createdOrder = CreateOrder::createOrder(true)->result;
     print "\nAfter PATCH (Changed Intent and Amount):\n";

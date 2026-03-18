@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Test;
 
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
@@ -17,8 +19,8 @@ class TestHarness
     }
     public static function environment()
     {
-        $clientId = getenv("CLIENT_ID") ?: "<<PAYPAL-CLIENT-ID>>";
-        $clientSecret = getenv("CLIENT_SECRET") ?: "<<PAYPAL-CLIENT-SECRET>>";
+        $clientId = getenv('CLIENT_ID') ?: '<<PAYPAL-CLIENT-ID>>';
+        $clientSecret = getenv('CLIENT_SECRET') ?: '<<PAYPAL-CLIENT-SECRET>>';
         return new SandboxEnvironment($clientId, $clientSecret);
     }
 }
