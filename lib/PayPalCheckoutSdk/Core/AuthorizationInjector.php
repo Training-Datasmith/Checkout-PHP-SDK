@@ -11,7 +11,7 @@ use PayPalHttp\Injector;
 class AuthorizationInjector implements Injector
 {
     private $client;
-    public $accessToken;
+    private $accessToken;
 
     public function __construct(HttpClient $client, private readonly PayPalEnvironment $environment, private $refreshToken)
     {
