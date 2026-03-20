@@ -1,8 +1,7 @@
 <?php
 
-declare(strict_types=1);
-
-namespace PayPalCheckoutSdk\Core;
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
 class Version
 {

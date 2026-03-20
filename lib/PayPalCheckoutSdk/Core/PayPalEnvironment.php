@@ -1,19 +1,16 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
-namespace PayPalCheckoutSdk\Core;
-
-use PayPalHttp\Environment;
-
-abstract class PayPalEnvironment implements Environment
+use Pay_Pal_Http\Environment;
+abstract class Pay_Pal_Environment implements Environment
 {
-    public function __construct(private $clientId, private $clientSecret)
+    public function __construct(private $client_id, private $client_secret)
     {
     }
-
-    public function authorizationString()
+    public function authorization_string()
     {
-        return base64_encode($this->clientId . ':' . $this->clientSecret);
+        return base64_encode($this->client_id . ':' . $this->client_secret);
     }
 }

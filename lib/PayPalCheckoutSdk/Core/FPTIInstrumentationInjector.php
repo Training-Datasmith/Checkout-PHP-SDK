@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
-namespace PayPalCheckoutSdk\Core;
-
-use PayPalHttp\Injector;
-
-class FPTIInstrumentationInjector implements Injector
+use Pay_Pal_Http\Injector;
+class Fpti_Instrumentation_Injector implements Injector
 {
     public function inject($request): void
     {

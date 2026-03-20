@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
-namespace PayPalCheckoutSdk\Core;
-
-class ProductionEnvironment extends PayPalEnvironment
+class Production_Environment extends Pay_Pal_Environment
 {
-    public function baseUrl(): string
+    public function base_url(): string
     {
         return 'https://api.paypal.com';
     }

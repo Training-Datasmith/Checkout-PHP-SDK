@@ -1,20 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
-namespace PayPalCheckoutSdk\Core;
-
-class AccessToken
+class Access_Token
 {
-    private readonly int $createDate;
-
-    public function __construct(public $token, public $tokenType, public $expiresIn)
+    private readonly int $create_date;
+    public function __construct(public $token, public $token_type, public $expires_in)
     {
-        $this->createDate = time();
+        $this->create_date = time();
     }
-
-    public function isExpired(): bool
+    public function is_expired(): bool
     {
-        return time() >= $this->createDate + $this->expiresIn;
+        return time() >= $this->create_date + $this->expires_in;
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Pay_Pal_Checkout_Sdk\Core;
 
-namespace PayPalCheckoutSdk\Core;
-
-use PayPalHttp\Injector;
-
-class GzipInjector implements Injector
+use Pay_Pal_Http\Injector;
+class Gzip_Injector implements Injector
 {
-    public function inject($httpRequest): void
+    public function inject($http_request): void
     {
-        $httpRequest->headers['Accept-Encoding'] = 'gzip';
+        $http_request->headers['Accept-Encoding'] = 'gzip';
     }
 }
