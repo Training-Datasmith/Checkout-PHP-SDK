@@ -1,7 +1,14 @@
 {
     "name": "paypal/paypal-checkout-sdk",
     "description": "PayPal's PHP SDK for Checkout REST APIs",
-    "keywords": ["paypal", "payments", "rest", "sdk", "orders", "checkout"],
+    "keywords": [
+        "paypal",
+        "payments",
+        "rest",
+        "sdk",
+        "orders",
+        "checkout"
+    ],
     "type": "library",
     "license": "Apache-2.0",
     "homepage": "http://github.com/paypal/Checkout-PHP-SDK/",
@@ -19,13 +26,13 @@
     },
     "autoload": {
         "psr-4": {
-            "PayPalCheckoutSdk\\": "lib/PayPalCheckoutSdk",
-            "Sample\\":"samples/"
+            "Pay_Pal_Checkout_Sdk\\": "lib/PayPalCheckoutSdk",
+            "Sample\\": "samples/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\":"tests/"
+            "Test\\": "tests/"
         }
     },
     "scripts": {
