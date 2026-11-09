@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use Sample\AuthorizeIntentExamples\AuthorizeOrder;
-use Sample\AuthorizeIntentExamples\CaptureOrder;
-use Sample\AuthorizeIntentExamples\CreateOrder;
-use Sample\RefundOrder;
+use Sample\AuthorizeIntentExamples\Authorize_Order;
+use Sample\AuthorizeIntentExamples\Capture_Order;
+use Sample\AuthorizeIntentExamples\Create_Order;
+use Sample\Refund_Order;
 
-$order = CreateOrder::createOrder();
+$order = Create_Order::createOrder();
 
 print "Creating Order...\n";
 $orderId = '';
@@ -31,7 +31,7 @@ $line = fgets($handle);
 fclose($handle);
 
 print "Authorizing Order...\n";
-$response = AuthorizeOrder::authorizeOrder($orderId);
+$response = Authorize_Order::authorizeOrder($orderId);
 $authId = '';
 
 if ($response->statusCode == 201) {
@@ -42,7 +42,7 @@ if ($response->statusCode == 201) {
 }
 
 print "\nCapturing Order...\n";
-$response = CaptureOrder::captureOrder($authId);
+$response = Capture_Order::captureOrder($authId);
 if ($response->statusCode == 201) {
     print "Captured Successfully\n";
     print "Status Code: {$response->statusCode}\n";
@@ -59,7 +59,7 @@ if ($response->statusCode == 201) {
 }
 
 print "\nRefunding Order...\n";
-$response = RefundOrder::refundOrder($captureId);
+$response = Refund_Order::refundOrder($captureId);
 if ($response->statusCode == 201) {
     print "Refunded Successfully\n";
     print "Status Code: {$response->statusCode}\n";

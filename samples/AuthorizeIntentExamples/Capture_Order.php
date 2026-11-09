@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Sample\AuthorizeIntentExamples;
 
 require __DIR__ . '/../../vendor/autoload.php';
-use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
-use Sample\PayPalClient;
+use Pay_Pal_Checkout_Sdk\Payments\Authorizations_Capture_Request;
+use Sample\Pay_Pal_Client;
 
-class CaptureOrder
+class Capture_Order
 {
     /**
      * Below method can be used to build the capture request body.
@@ -26,9 +26,9 @@ class CaptureOrder
      */
     public static function captureOrder($authorizationId, $debug = false)
     {
-        $request = new AuthorizationsCaptureRequest($authorizationId);
+        $request = new Authorizations_Capture_Request($authorizationId);
         $request->body = self::buildRequestBody();
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
 
         if ($debug) {
@@ -50,5 +50,5 @@ class CaptureOrder
  * Driver function for invoking the capture flow.
  */
 if (!count(debug_backtrace())) {
-    CaptureOrder::captureOrder('18A38324BV5456924', true);
+    Capture_Order::captureOrder('18A38324BV5456924', true);
 }

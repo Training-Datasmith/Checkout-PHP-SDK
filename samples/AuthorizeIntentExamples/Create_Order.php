@@ -6,10 +6,10 @@ namespace Sample\AuthorizeIntentExamples;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use Sample\PayPalClient;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Create_Request;
+use Sample\Pay_Pal_Client;
 
-class CreateOrder
+class Create_Order
 {
     /**
      * Setting up the JSON request body for creating the Order with complete request body. The Intent in the
@@ -166,11 +166,11 @@ class CreateOrder
      */
     public static function createOrder($debug = false)
     {
-        $request = new OrdersCreateRequest();
+        $request = new Orders_Create_Request();
         $request->headers['prefer'] = 'return=representation';
-        $request->body = CreateOrder::buildRequestBody();
+        $request->body = Create_Order::buildRequestBody();
 
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
         if ($debug) {
             print "Status Code: {$response->statusCode}\n";
@@ -197,11 +197,11 @@ class CreateOrder
      */
     public static function createOrderWithMinimumBody($debug = false)
     {
-        $request = new OrdersCreateRequest();
+        $request = new Orders_Create_Request();
         $request->headers['prefer'] = 'return=representation';
-        $request->body = CreateOrder::buildMinimumRequestBody();
+        $request->body = Create_Order::buildMinimumRequestBody();
 
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
         if ($debug) {
             print "Order With Minimum Body\n";
@@ -225,6 +225,6 @@ class CreateOrder
 }
 
 if (!count(debug_backtrace())) {
-    CreateOrder::createOrder(true);
-    CreateOrder::createOrderWithMinimumBody(true);
+    Create_Order::createOrder(true);
+    Create_Order::createOrderWithMinimumBody(true);
 }

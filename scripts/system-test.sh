@@ -106,9 +106,62 @@ rm -f "${composer_out}"
 
 php scripts/check-cluster-pins.php
 
+samples_out="$(mktemp)"
+set +e
+{
+    sample_count=0
+    while IFS= read -r -d '' sample_file; do
+        php -l "${sample_file}" || exit 1
+        sample_count=$((sample_count + 1))
+    done < <(find samples -type f -name '*.php' -print0)
+    echo "sample-lint: OK (${sample_count} files)"
+
+    php -r '
+require "vendor/autoload.php";
+$classes = [
+    "Sample\\Pay_Pal_Client",
+    "Sample\\AuthorizeIntentExamples\\Create_Order",
+    "Sample\\AuthorizeIntentExamples\\Authorize_Order",
+    "Sample\\AuthorizeIntentExamples\\Capture_Order",
+    "Sample\\CaptureIntentExamples\\Create_Order",
+    "Sample\\CaptureIntentExamples\\Capture_Order",
+    "Sample\\Error_Sample",
+    "Sample\\Get_Order",
+    "Sample\\Patch_Order",
+    "Sample\\Refund_Order",
+];
+foreach ($classes as $class) {
+    if (!class_exists($class)) {
+        fwrite(STDERR, "sample autoload missing: {$class}\n");
+        exit(1);
+    }
+}
+echo "sample-autoload: OK (" . count($classes) . " classes)\n";
+'
+} >"${samples_out}" 2>&1
+samples_status=$?
+set -e
+cat "${samples_out}"
+fail_deprecation_output "sample lint/autoload" "${samples_out}"
+if [[ ${samples_status} -ne 0 ]]; then
+    rm -f "${samples_out}"
+    exit "${samples_status}"
+fi
+if ! grep -E '^sample-lint: OK \([0-9]+ files\)$' "${samples_out}" >/dev/null; then
+    echo 'sample lint: missing exact success line' >&2
+    rm -f "${samples_out}"
+    exit 1
+fi
+if ! grep -E '^sample-autoload: OK \([0-9]+ classes\)$' "${samples_out}" >/dev/null; then
+    echo 'sample autoload: missing exact success line' >&2
+    rm -f "${samples_out}"
+    exit 1
+fi
+rm -f "${samples_out}"
+
 audit_out="$(mktemp)"
 set +e
-php /tmp/composer.phar audit --no-interaction --abandoned=ignore >"${audit_out}" 2>&1
+php /tmp/composer.phar audit --no-interaction --abandoned=report >"${audit_out}" 2>&1
 audit_status=$?
 set -e
 cat "${audit_out}"
@@ -148,6 +201,8 @@ EOF
 chmod +x "${INNER_SCRIPT}"
 
 docker_cmd run --rm \
+    -e CLIENT_ID="${CLIENT_ID:-}" \
+    -e CLIENT_SECRET="${CLIENT_SECRET:-}" \
     -v "${REPO_ROOT}:/app" \
     -v "${INNER_SCRIPT}:/tmp/system-test-inner.sh:ro" \
     -w /app \

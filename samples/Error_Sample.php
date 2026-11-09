@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+namespace Sample;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Create_Request;
 use PayPalHttp\HttpException;
-use Sample\PayPalClient;
+use Sample\Pay_Pal_Client;
 
-class ErrorSample
+class Error_Sample
 {
     public static function prettyPrint($jsonData, $pre = '')
     {
@@ -34,13 +36,13 @@ class ErrorSample
      */
     public static function createError1()
     {
-        $request = new OrdersCreateRequest();
+        $request = new Orders_Create_Request();
         $request->body = '{}';
         print "Request Body: {}\n\n";
 
         print "Response:\n";
         try {
-            $client = PayPalClient::client();
+            $client = Pay_Pal_Client::client();
             $response = $client->execute($request);
         } catch (HttpException $exception) {
             $message = json_decode($exception->getMessage(), true);
@@ -54,7 +56,7 @@ class ErrorSample
      */
     public static function createError2()
     {
-        $request = new OrdersCreateRequest();
+        $request = new Orders_Create_Request();
         $request->body =  [
             'intent' => 'INVALID',
             'purchase_units' =>
@@ -72,7 +74,7 @@ class ErrorSample
         print "Request Body:\n" . json_encode($request->body, JSON_PRETTY_PRINT) . "\n\n";
 
         try {
-            $client = PayPalClient::client();
+            $client = Pay_Pal_Client::client();
             $response = $client->execute($request);
         } catch (HttpException $exception) {
             print "Response:\n";
@@ -84,8 +86,10 @@ class ErrorSample
     }
 }
 
-print "Calling createError1 (Body has no required parameters (intent, purchase_units))\n";
-ErrorSample::createError1();
+if (!count(debug_backtrace())) {
+    print "Calling createError1 (Body has no required parameters (intent, purchase_units))\n";
+    Error_Sample::createError1();
 
-print "\n\nCalling createError2 (Body has invalid parameter value for intent)\n";
-ErrorSample::createError2();
+    print "\n\nCalling createError2 (Body has invalid parameter value for intent)\n";
+    Error_Sample::createError2();
+}

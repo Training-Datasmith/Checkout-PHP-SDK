@@ -6,10 +6,10 @@ namespace Sample\CaptureIntentExamples;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use Sample\PayPalClient;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Create_Request;
+use Sample\Pay_Pal_Client;
 
-class CreateOrder
+class Create_Order
 {
     /**
      * Setting up the JSON request body for creating the Order. The Intent in the
@@ -138,11 +138,11 @@ class CreateOrder
      */
     public static function createOrder($debug = false)
     {
-        $request = new OrdersCreateRequest();
+        $request = new Orders_Create_Request();
         $request->headers['prefer'] = 'return=representation';
         $request->body = self::buildRequestBody();
 
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
         if ($debug) {
             print "Status Code: {$response->statusCode}\n";
@@ -166,5 +166,5 @@ class CreateOrder
  * an sample order.
  */
 if (!count(debug_backtrace())) {
-    CreateOrder::createOrder(true);
+    Create_Order::createOrder(true);
 }

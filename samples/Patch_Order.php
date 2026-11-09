@@ -6,11 +6,11 @@ namespace Sample;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersGetRequest;
-use PayPalCheckoutSdk\Orders\OrdersPatchRequest;
-use Sample\AuthorizeIntentExamples\CreateOrder;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Get_Request;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Patch_Request;
+use Sample\AuthorizeIntentExamples\Create_Order;
 
-class PatchOrder
+class Patch_Order
 {
     private static function buildRequestBody()
     {
@@ -50,13 +50,13 @@ class PatchOrder
     public static function patchOrder($orderId)
     {
 
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
 
-        $request = new OrdersPatchRequest($orderId);
-        $request->body = PatchOrder::buildRequestBody();
+        $request = new Orders_Patch_Request($orderId);
+        $request->body = Patch_Order::buildRequestBody();
         $client->execute($request);
 
-        $response = $client->execute(new OrdersGetRequest($orderId));
+        $response = $client->execute(new Orders_Get_Request($orderId));
 
         print "Status Code: {$response->statusCode}\n";
         print "Status: {$response->result->status}\n";
@@ -76,7 +76,7 @@ class PatchOrder
 
 if (!count(debug_backtrace())) {
     print "Before PATCH:\n";
-    $createdOrder = CreateOrder::createOrder(true)->result;
+    $createdOrder = Create_Order::createOrder(true)->result;
     print "\nAfter PATCH (Changed Intent and Amount):\n";
-    PatchOrder::patchOrder($createdOrder->id);
+    Patch_Order::patchOrder($createdOrder->id);
 }

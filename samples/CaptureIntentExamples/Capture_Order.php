@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Sample\CaptureIntentExamples;
 
 require __DIR__ . '/../../vendor/autoload.php';
-use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
-use Sample\PayPalClient;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Capture_Request;
+use Sample\Pay_Pal_Client;
 
-class CaptureOrder
+class Capture_Order
 {
     /**
      * This function can be used to capture an order payment by passing the approved
@@ -20,9 +20,9 @@ class CaptureOrder
      */
     public static function captureOrder($orderId, $debug = false)
     {
-        $request = new OrdersCaptureRequest($orderId);
+        $request = new Orders_Capture_Request($orderId);
 
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
         if ($debug) {
             print "Status Code: {$response->statusCode}\n";
@@ -51,5 +51,5 @@ class CaptureOrder
  * <b>Approved</b> Order Id to capture the order payment.
  */
 if (!count(debug_backtrace())) {
-    CaptureOrder::captureOrder('0F105083N67049335', true);
+    Capture_Order::captureOrder('0F105083N67049335', true);
 }

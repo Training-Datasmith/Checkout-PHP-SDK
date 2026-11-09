@@ -19,7 +19,7 @@ The Status Page has been updated with this information. The bulletin can be foun
 
 ## Prerequisites
 
-PHP 5.6 and above
+PHP 8.1 and above
 
 An environment which supports TLS 1.2 (see the TLS-update site for more information)
 
@@ -36,14 +36,14 @@ Get client ID and client secret by going to https://developer.paypal.com/develop
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
-use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use Pay_Pal_Checkout_Sdk\Core\Pay_Pal_Http_Client;
+use Pay_Pal_Checkout_Sdk\Core\Sandbox_Environment;
 // Creating an environment
 $clientId = "<<PAYPAL-CLIENT-ID>>";
 $clientSecret = "<<PAYPAL-CLIENT-SECRET>>";
 
-$environment = new SandboxEnvironment($clientId, $clientSecret);
-$client = new PayPalHttpClient($environment);
+$environment = new Sandbox_Environment($clientId, $clientSecret);
+$client = new Pay_Pal_Http_Client($environment);
 ```
 
 ## Examples
@@ -51,9 +51,9 @@ $client = new PayPalHttpClient($environment);
 #### Code:
 ```php
 // Construct a request object and set desired parameters
-// Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-$request = new OrdersCreateRequest();
+// Here, Orders_Create_Request creates a POST request to /v2/checkout/orders
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Create_Request;
+$request = new Orders_Create_Request();
 $request->prefer('return=representation');
 $request->body = [
                      "intent" => "CAPTURE",
@@ -115,10 +115,10 @@ Status: CREATED
 Before capture, Order should be approved by the buyer using the approval URL returned in the create order response.
 ### Code to Execute:
 ```php
-use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
-// Here, OrdersCaptureRequest() creates a POST request to /v2/checkout/orders
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Capture_Request;
+// Here, Orders_Capture_Request creates a POST request to /v2/checkout/orders
 // $response->result->id gives the orderId of the order created above
-$request = new OrdersCaptureRequest("APPROVED-ORDER-ID");
+$request = new Orders_Capture_Request("APPROVED-ORDER-ID");
 $request->prefer('return=representation');
 try {
     // Call API with your client and get a response for your call
@@ -167,11 +167,11 @@ $ CLIENT_ID=YOUR_SANDBOX_CLIENT_ID CLIENT_SECRET=OUR_SANDBOX_CLIENT_SECRET compo
 
 ## Samples
 
-You can start off by trying out [creating and capturing an order](/samples/CaptureIntentExamples/RunAll.php)
+You can start off by trying out [creating and capturing an order](/samples/CaptureIntentExamples/Run_All.php)
 
 To try out different samples for both create and authorize intent check [this link](/samples)
 
-Note: Update the `PayPalClient.php` with your sandbox client credentials or pass your client credentials as environment variable while executing the samples.
+Note: Update `samples/Pay_Pal_Client.php` with your sandbox client credentials or pass `CLIENT_ID` and `CLIENT_SECRET` as environment variables while executing the samples.
 
 
 ## License

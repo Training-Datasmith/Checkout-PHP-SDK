@@ -6,10 +6,10 @@ namespace Sample;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Orders\OrdersGetRequest;
-use Sample\CaptureIntentExamples\CreateOrder;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Get_Request;
+use Sample\CaptureIntentExamples\Create_Order;
 
-class GetOrder
+class Get_Order
 {
     /**
      * This function can be used to retrieve an order by passing order Id as argument.
@@ -17,8 +17,8 @@ class GetOrder
     public static function getOrder($orderId)
     {
 
-        $client = PayPalClient::client();
-        $response = $client->execute(new OrdersGetRequest($orderId));
+        $client = Pay_Pal_Client::client();
+        $response = $client->execute(new Orders_Get_Request($orderId));
         /**
          * Enable below line to print complete response as JSON.
          */
@@ -47,6 +47,6 @@ class GetOrder
  * and then we are using the newly created order id.
  */
 if (!count(debug_backtrace())) {
-    $createdOrder = CreateOrder::createOrder()->result;
-    GetOrder::getOrder($createdOrder ->id);
+    $createdOrder = Create_Order::createOrder()->result;
+    Get_Order::getOrder($createdOrder ->id);
 }

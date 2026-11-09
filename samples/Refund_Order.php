@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Sample;
 
 require __DIR__ . '/../vendor/autoload.php';
-use PayPalCheckoutSdk\Payments\CapturesRefundRequest;
+use Pay_Pal_Checkout_Sdk\Payments\Captures_Refund_Request;
 
-class RefundOrder
+class Refund_Order
 {
     /**
      * Function to create an refund capture request. Payload can be updated to issue partial refund.
@@ -28,9 +28,9 @@ class RefundOrder
      */
     public static function refundOrder($captureId, $debug = false)
     {
-        $request = new CapturesRefundRequest($captureId);
+        $request = new Captures_Refund_Request($captureId);
         $request->body = self::buildRequestBody();
-        $client = PayPalClient::client();
+        $client = Pay_Pal_Client::client();
         $response = $client->execute($request);
 
         if ($debug) {
@@ -53,5 +53,5 @@ class RefundOrder
  * Capture Id to perform refund on capture.
  */
 if (!count(debug_backtrace())) {
-    RefundOrder::refundOrder('8XL09935J2224701N', true);
+    Refund_Order::refundOrder('8XL09935J2224701N', true);
 }

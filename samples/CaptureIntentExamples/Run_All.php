@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use Sample\CaptureIntentExamples\CaptureOrder;
-use Sample\CaptureIntentExamples\CreateOrder;
-use Sample\RefundOrder;
+use Sample\CaptureIntentExamples\Capture_Order;
+use Sample\CaptureIntentExamples\Create_Order;
+use Sample\Refund_Order;
 
-$order = CreateOrder::createOrder();
+$order = Create_Order::createOrder();
 
 print "Creating Order...\n";
 $orderId = '';
@@ -30,7 +30,7 @@ $line = fgets($handle);
 fclose($handle);
 
 print "Capturing Order...\n";
-$response = CaptureOrder::captureOrder($orderId);
+$response = Capture_Order::captureOrder($orderId);
 if ($response->statusCode == 201) {
     print "Captured Successfully\n";
     print "Status Code: {$response->statusCode}\n";
@@ -51,7 +51,7 @@ if ($response->statusCode == 201) {
 }
 
 print "\nRefunding Order...\n";
-$response = RefundOrder::refundOrder($captureId);
+$response = Refund_Order::refundOrder($captureId);
 if ($response->statusCode == 201) {
     print "Refunded Successfully\n";
     print "Status Code: {$response->statusCode}\n";
