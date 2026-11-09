@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Test\Orders;
 
-use PayPalCheckoutSdk\Orders\OrdersAuthorizeRequest;
-
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Authorize_Request;
 use PHPUnit\Framework\TestCase;
-use Test\TestHarness;
+use Test\Test_Harness;
 
-class OrdersAuthorizeTest extends TestCase
+class Orders_Authorize_Test extends TestCase
 {
-    public function testOrdersAuthorizeRequest()
+    public function testOrdersAuthorizeRequest(): void
     {
-        $this->markTestSkipped('Need an approved Order ID to execute this test.');
-        $request = new OrdersAuthorizeRequest('ORDER-ID');
-        $request->body = $this->buildRequestBody();
+        $request = new Orders_Authorize_Request('ORDER-ID');
 
-        $client = TestHarness::client();
+        $client = Test_Harness::client();
         $response = $client->execute($request);
         $this->assertEquals(201, $response->statusCode);
         $this->assertNotNull($response->result);

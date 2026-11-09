@@ -9,8 +9,8 @@ declare (strict_types=1);
 // DO NOT EDIT
 namespace Pay_Pal_Checkout_Sdk\Payments;
 
-use Pay_Pal_Http\Http_Request;
-class Captures_Refund_Request extends Http_Request
+use PayPalHttp\HttpRequest;
+class Captures_Refund_Request extends HttpRequest
 {
     public function __construct($capture_id)
     {

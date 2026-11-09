@@ -3,8 +3,8 @@
 declare (strict_types=1);
 namespace Pay_Pal_Checkout_Sdk\Core;
 
-use Pay_Pal_Http\Http_Request;
-class Access_Token_Request extends Http_Request
+use PayPalHttp\HttpRequest;
+class Access_Token_Request extends HttpRequest
 {
     public function __construct(Pay_Pal_Environment $environment, $refresh_token = null)
     {

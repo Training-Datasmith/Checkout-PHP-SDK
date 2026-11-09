@@ -3,8 +3,8 @@
 declare (strict_types=1);
 namespace Pay_Pal_Checkout_Sdk\Core;
 
-use Pay_Pal_Http\Injector;
-class Fpti_Instrumentation_Injector implements Injector
+use PayPalHttp\Injector;
+class FPTI_Instrumentation_Injector implements Injector
 {
     public function inject($request): void
     {

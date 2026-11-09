@@ -6,24 +6,24 @@ declare(strict_types=1);
  * Example: Create a PayPal Order using the Checkout PHP SDK (capture intent).
  *
  * Requires PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables.
- * Uses the PayPal sandbox environment — switch to ProductionEnvironment for live.
+ * Uses the PayPal sandbox environment — switch to Production_Environment for live.
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Core\SandboxEnvironment;
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use Pay_Pal_Checkout_Sdk\Core\Pay_Pal_Http_Client;
+use Pay_Pal_Checkout_Sdk\Core\Sandbox_Environment;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Capture_Request;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Create_Request;
 
 $clientId     = (string) getenv('PAYPAL_CLIENT_ID');
 $clientSecret = (string) getenv('PAYPAL_CLIENT_SECRET');
 
-$environment = new SandboxEnvironment($clientId, $clientSecret);
-$client      = new PayPalHttpClient($environment);
+$environment = new Sandbox_Environment($clientId, $clientSecret);
+$client      = new Pay_Pal_Http_Client($environment);
 
 // --- Create Order ---
-$createRequest = new OrdersCreateRequest();
+$createRequest = new Orders_Create_Request();
 $createRequest->headers['Prefer'] = 'return=representation';
 $createRequest->body = [
     'intent'         => 'CAPTURE',
@@ -57,6 +57,6 @@ foreach ($createResponse->result->links as $link) {
 }
 
 // --- Capture Order (after buyer approval) ---
-// $captureRequest = new OrdersCaptureRequest($orderId);
+// $captureRequest = new Orders_Capture_Request($orderId);
 // $captureResponse = $client->execute($captureRequest);
 // echo "Captured: " . $captureResponse->result->status . PHP_EOL;

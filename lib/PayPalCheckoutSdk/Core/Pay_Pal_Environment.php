@@ -3,7 +3,7 @@
 declare (strict_types=1);
 namespace Pay_Pal_Checkout_Sdk\Core;
 
-use Pay_Pal_Http\Environment;
+use PayPalHttp\Environment;
 abstract class Pay_Pal_Environment implements Environment
 {
     public function __construct(private $client_id, private $client_secret)

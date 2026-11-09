@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Test\Orders;
 
-use PayPalCheckoutSdk\Orders\OrdersGetRequest;
-
-use PayPalCheckoutSdk\Orders\OrdersPatchRequest;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Get_Request;
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Patch_Request;
 use PHPUnit\Framework\TestCase;
-use Test\TestHarness;
+use Test\Test_Harness;
 
-class OrdersPatchTest extends TestCase
+class Orders_Patch_Test extends TestCase
 {
-    private function buildRequestBody()
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function buildRequestBody(): array
     {
         return [
             [
@@ -31,17 +33,17 @@ class OrdersPatchTest extends TestCase
         ];
     }
 
-    public function testOrdersPatchRequest()
+    public function testOrdersPatchRequest(): void
     {
-        $client = TestHarness::client();
-        $createdOrder = OrdersCreateTest::create($client);
+        $client = Test_Harness::client();
+        $createdOrder = Orders_Create_Test::create($client);
 
-        $request = new OrdersPatchRequest($createdOrder->result->id);
+        $request = new Orders_Patch_Request($createdOrder->result->id);
         $request->body = $this->buildRequestBody();
         $response = $client->execute($request);
         $this->assertEquals(204, $response->statusCode);
 
-        $request = new OrdersGetRequest($createdOrder->result->id);
+        $request = new Orders_Get_Request($createdOrder->result->id);
         $response = $client->execute($request);
         $this->assertEquals(200, $response->statusCode);
         $this->assertNotNull($response->result);
@@ -49,7 +51,7 @@ class OrdersPatchTest extends TestCase
         $createdOrder = $response->result;
         $this->assertNotNull($createdOrder->id);
         $this->assertNotNull($createdOrder->purchase_units);
-        $this->assertEquals(1, count($createdOrder->purchase_units));
+        $this->assertCount(1, $createdOrder->purchase_units);
         $firstPurchaseUnit = $createdOrder->purchase_units[0];
         $this->assertEquals('test_ref_id1', $firstPurchaseUnit->reference_id);
         $this->assertEquals('USD', $firstPurchaseUnit->amount->currency_code);

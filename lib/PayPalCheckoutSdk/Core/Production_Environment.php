@@ -9,4 +9,9 @@ class Production_Environment extends Pay_Pal_Environment
     {
         return 'https://api.paypal.com';
     }
+
+    public function baseUrl(): string
+    {
+        return $this->base_url();
+    }
 }

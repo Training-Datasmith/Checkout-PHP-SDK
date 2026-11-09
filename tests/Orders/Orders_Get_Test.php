@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Test\Orders;
 
-use PayPalCheckoutSdk\Orders\OrdersGetRequest;
-
+use Pay_Pal_Checkout_Sdk\Orders\Orders_Get_Request;
 use PHPUnit\Framework\TestCase;
-use Test\TestHarness;
+use Test\Test_Harness;
 
-class OrdersGetTest extends TestCase
+class Orders_Get_Test extends TestCase
 {
-    public function testOrdersGetRequest()
+    public function testOrdersGetRequest(): void
     {
-        $client = TestHarness::client();
-        $createdOrder = OrdersCreateTest::create($client);
+        $client = Test_Harness::client();
+        $createdOrder = Orders_Create_Test::create($client);
 
-        $request = new OrdersGetRequest($createdOrder->result->id);
+        $request = new Orders_Get_Request($createdOrder->result->id);
         $response = $client->execute($request);
         $this->assertEquals(200, $response->statusCode);
         $this->assertNotNull($response->result);
@@ -24,7 +23,7 @@ class OrdersGetTest extends TestCase
         $createdOrder = $response->result;
         $this->assertNotNull($createdOrder->id);
         $this->assertNotNull($createdOrder->purchase_units);
-        $this->assertEquals(1, count($createdOrder->purchase_units));
+        $this->assertCount(1, $createdOrder->purchase_units);
         $firstPurchaseUnit = $createdOrder->purchase_units[0];
         $this->assertEquals('test_ref_id1', $firstPurchaseUnit->reference_id);
         $this->assertEquals('USD', $firstPurchaseUnit->amount->currency_code);

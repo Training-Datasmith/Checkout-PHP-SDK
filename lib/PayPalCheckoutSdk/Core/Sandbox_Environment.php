@@ -9,4 +9,9 @@ class Sandbox_Environment extends Pay_Pal_Environment
     {
         return 'https://api.sandbox.paypal.com';
     }
+
+    public function baseUrl(): string
+    {
+        return $this->base_url();
+    }
 }

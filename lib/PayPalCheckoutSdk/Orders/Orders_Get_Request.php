@@ -9,8 +9,8 @@ declare (strict_types=1);
 // DO NOT EDIT
 namespace Pay_Pal_Checkout_Sdk\Orders;
 
-use Pay_Pal_Http\Http_Request;
-class Orders_Get_Request extends Http_Request
+use PayPalHttp\HttpRequest;
+class Orders_Get_Request extends HttpRequest
 {
     public function __construct($order_id)
     {

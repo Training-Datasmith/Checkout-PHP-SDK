@@ -3,14 +3,14 @@
 declare (strict_types=1);
 namespace Pay_Pal_Checkout_Sdk\Core;
 
-use Pay_Pal_Http\Http_Client;
-use Pay_Pal_Http\Http_Request;
-use Pay_Pal_Http\Injector;
+use PayPalHttp\HttpClient;
+use PayPalHttp\HttpRequest;
+use PayPalHttp\Injector;
 class Authorization_Injector implements Injector
 {
     private $client;
     private $access_token;
-    public function __construct(Http_Client $client, private readonly Pay_Pal_Environment $environment, private $refresh_token)
+    public function __construct(HttpClient $client, private readonly Pay_Pal_Environment $environment, private $refresh_token)
     {
         $this->client = $client;
     }
@@ -33,7 +33,7 @@ class Authorization_Injector implements Injector
     {
         return $request instanceof Access_Token_Request || $request instanceof Refresh_Token_Request;
     }
-    private function has_auth_header(Http_Request $request): bool
+    private function has_auth_header(HttpRequest $request): bool
     {
         return array_key_exists('Authorization', $request->headers);
     }
